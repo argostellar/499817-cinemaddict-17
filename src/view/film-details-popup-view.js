@@ -167,7 +167,7 @@ const createFilmDetailsPopupTemplate = () => `<section class="film-details">
 
 export default class FilmDetailsPopupView {
   getTemplate() {
-    return createFilmDetailsTemplate();
+    return createFilmDetailsPopupTemplate();
   }
 
   getElement() {

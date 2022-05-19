@@ -1,11 +1,9 @@
 import FilmsView from '../view/films-view.js';
 import FilmsListView from '../view/films-list-view.js';
 import FilmsListContainerView from '../view/films-list-container-view.js';
-import FilterView from '../view/filter-view.js';
 import SortView from '../view/sort-view.js';
 import ShowMoreBtnView from '../view/show-more-btn-view.js';
 import CardView from '../view/card-view.js';
-import FilmDetailsPopupView from '../view/film-details-popup-view.js';
 import {render} from '../render.js';
 
 export default class FilmsPresenter {
