@@ -1,10 +1,10 @@
 import {createElement} from '../render.js';
 
-const createFilmsTemplate = () => '<section class="films"></section>';
+const createLibriaryTemplate = () => '<section class="films"></section>';
 
-export default class FilmsView {
+export default class LibriaryView {
   getTemplate() {
-    return createFilmsTemplate();
+    return createLibriaryTemplate();
   }
 
   getElement() {
