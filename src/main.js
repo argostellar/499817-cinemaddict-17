@@ -12,7 +12,7 @@ const siteHeaderElement = document.querySelector('.header');
 const siteFooterElement = document.querySelector('.footer');
 
 const filmsModel = new FilmsModel();
-const libriaryPresenter = new LibriaryPresenter();
+const libriaryPresenter = new LibriaryPresenter(siteMainElement, filmsModel);
 
 render(new FilterView(), siteMainElement);
 render(new UserLevelView(), siteHeaderElement);
@@ -22,4 +22,4 @@ render(new StatisticsView(), siteFooterElement);
 // const libraryComments = filmsModel.getComments();
 // render(new FilmDetailsPopupView(libriaryFilms[0], libraryComments), siteMainElement);
 
-libriaryPresenter.init(siteMainElement, filmsModel);
+libriaryPresenter.init();

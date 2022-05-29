@@ -5,7 +5,10 @@ import SortView from '../view/sort-view.js';
 import ShowMoreBtnView from '../view/show-more-btn-view.js';
 import CardView from '../view/card-view.js';
 import CardPopupView from '../view/card-popup-view.js';
-import {render} from '../render.js';
+import NoCardView from '../view/no-card-view.js';
+import {render, RenderPosition} from '../render.js';
+
+const CARDS_COUNT_PER_STEP = 5;
 
 export default class LibriaryPresenter {
   #libriaryContainer = null;
@@ -14,28 +17,36 @@ export default class LibriaryPresenter {
   #libriaryComponent = new LibriaryView();
   #filmsListComponent = new FilmsListView();
   #filmsListContainer = new FilmsListContainerView();
+  #showMoreBtnComponent = new ShowMoreBtnView();
 
   #libriaryFilms = [];
   #comments = [];
+  #renderedCardsCount = CARDS_COUNT_PER_STEP;
 
-  init = (libriaryContainer, filmsModel) => {
+  constructor(libriaryContainer, filmsModel) {
     this.#libriaryContainer = libriaryContainer;
     this.#filmsModel = filmsModel;
+  }
+
+  init = () => {
     this.#libriaryFilms = [...this.#filmsModel.films];
     this.#comments = [...this.#filmsModel.comments];
 
-    render(this.#libriaryComponent, this.#libriaryContainer);
-    render(new SortView(), this.#libriaryComponent.element);
-    render(this.#filmsListComponent, this.#libriaryComponent.element);
-    render(this.#filmsListContainer, this.#filmsListComponent.element);
-    render(new ShowMoreBtnView(), this.#filmsListComponent.element);
+    this.#renderLibriary();
+  }
 
-    for (let i = 0; i < this.#libriaryFilms.length; i++) {
-      // console.log(this.#libriaryFilms[0]);
-      this.#renderCard(this.#libriaryFilms[i], this.#comments);
+  #handleShowMoreBtnClick = (evt) => {
+    evt.preventDefault();
+    this.#libriaryFilms
+      .slice(this.#renderedCardsCount, this.#renderedCardsCount + CARDS_COUNT_PER_STEP)
+      .forEach((film) => this.#renderCard(film, this.#comments));
+
+    this.#renderedCardsCount += CARDS_COUNT_PER_STEP;
+
+    if (this.#renderedCardsCount >= this.#libriaryFilms.length) {
+      this.#showMoreBtnComponent.element.remove();
+      this.#showMoreBtnComponent.removeElement();
     }
-
-    // render(new FilmDetailsPopupView(this.libriaryFilms[0], this.comments), this.libriaryContainer.getElement()); // это точно не работает
   };
 
   #renderCard = (film, comments) => {
@@ -89,5 +100,27 @@ export default class LibriaryPresenter {
     });
 
     render(cardComponent, this.#filmsListContainer.element);
+  };
+
+  #renderLibriary() {
+    render(this.#libriaryComponent, this.#libriaryContainer);
+    render(this.#filmsListComponent, this.#libriaryComponent.element);
+
+    if (this.#libriaryFilms.length === 0) {
+      render(new NoCardView(), this.#filmsListComponent.element);
+    } else {
+      render(new SortView(), this.#libriaryComponent.element, RenderPosition.BEFOREBEGIN);
+      render(this.#filmsListContainer, this.#filmsListComponent.element);
+
+      if (this.#libriaryFilms.length > CARDS_COUNT_PER_STEP) {
+        render(this.#showMoreBtnComponent, this.#filmsListComponent.element);
+
+        this.#showMoreBtnComponent.element.addEventListener('click', this.#handleShowMoreBtnClick);
+      }
+
+      for (let i = 0; i < Math.min(this.#libriaryFilms.length, CARDS_COUNT_PER_STEP); i++) {
+        this.#renderCard(this.#libriaryFilms[i], this.#comments);
+      }
+    }
   };
 }
