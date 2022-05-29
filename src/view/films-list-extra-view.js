@@ -47,19 +47,21 @@ const createFilmsListExtraTemplate = () => `<section class="films-list films-lis
     </section>`;
 
 export default class FilmsListExtraView {
-  getTemplate() {
+  #element = null;
+
+  get template() {
     return createFilmsListExtraTemplate();
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
