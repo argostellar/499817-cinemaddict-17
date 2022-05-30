@@ -7,9 +7,9 @@ export default class FilmsModel {
 
   get films() {
     return this.#films;
-  };
+  }
 
   get comments() {
     return this.#comments;
-  };
+  }
 }

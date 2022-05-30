@@ -44,6 +44,18 @@ export default class LibriaryPresenter {
 
     // let isPopupShown = null;
 
+    const hideCardPopup = () => {
+      // console.log(this.cardPopupComponent.element);\
+      // document.body.removeChild(cardPopupComponent.element);
+      const currentElement = document.body.querySelector('.film-details');
+      document.body.removeChild(currentElement);
+      document.body.classList.remove('hide-overflow');
+      // document.body.querySelector('.film-details').remove();
+      // isPopupShown = false;
+      // console.log(`isPopupShown: ${isPopupShown}`);
+      // this.cardPopupComponent.removeElement();
+    };
+
     const showCardPopup = () => {
       const cardPopupComponent = new CardPopupView(film, comments);
       document.body.appendChild(cardPopupComponent.element);
@@ -55,27 +67,15 @@ export default class LibriaryPresenter {
       });
     };
 
-    const hideCardPopup = () => {
-      // console.log(this.cardPopupComponent.element);\
-      // document.body.removeChild(cardPopupComponent.element);
-      const currentElement = document.body.querySelector('.film-details')
-      document.body.removeChild(currentElement);
-      document.body.classList.remove('hide-overflow');
-      // document.body.querySelector('.film-details').remove();
-      // isPopupShown = false;
-      // console.log(`isPopupShown: ${isPopupShown}`);
-      // this.cardPopupComponent.removeElement();
-    };
-
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         hideCardPopup();
         document.removeEventListener('keydown', onEscKeyDown);
       }
-    }
+    };
 
-    cardComponent.element.querySelector('.film-card__link').addEventListener('click', (evt) => {
+    cardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
       // if (!evt.target.classList.contains('film-card__controls-item')) {
       //   // if (this.cardPopupComponent || isPopupShown) {
       //   //   hideCardPopup();
