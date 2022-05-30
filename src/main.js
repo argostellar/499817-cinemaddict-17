@@ -23,3 +23,5 @@ render(new StatisticsView(), siteFooterElement);
 // render(new FilmDetailsPopupView(libriaryFilms[0], libraryComments), siteMainElement);
 
 libriaryPresenter.init(siteMainElement, filmsModel);
+
+// current task: module3-task1
