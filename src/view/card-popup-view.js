@@ -28,15 +28,19 @@ const createCommentTemplate = (comment) => {
 
 const createCommentsTemplate = (comments, commentsId) => {
   let result = '';
-  for (const id of commentsId) {
-    result += createCommentTemplate(comments[id]);
+  for (const currentId of commentsId) {
+    comments.forEach((item) => {
+      if (item.id === currentId) {
+        result += createCommentTemplate(item);
+      }
+    });
   }
   return result;
 };
 
 const setCtrlBtnStatus = (status) => `${ status ? 'film-details__control-button--active' : '' }`;
 
-const createFilmDetailsPopupTemplate = (film = {}, comments) => {
+const createCardPopupTemplate = (film = {}, comments) => {
   const {commentsId, filmInfo, userDetails} = film;
 
   const {
@@ -176,7 +180,9 @@ const createFilmDetailsPopupTemplate = (film = {}, comments) => {
 </section>`;
 };
 
-export default class FilmDetailsPopupView {
+export default class CardPopupView {
+  #element = null;
+
   constructor(film, comments) {
     this.film = film;
     this.comments = comments || [
@@ -190,19 +196,19 @@ export default class FilmDetailsPopupView {
     ];
   }
 
-  getTemplate() {
-    return createFilmDetailsPopupTemplate(this.film, this.comments);
+  get template() {
+    return createCardPopupTemplate(this.film, this.comments);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
