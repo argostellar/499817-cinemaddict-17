@@ -12,7 +12,7 @@ const siteHeaderElement = document.querySelector('.header');
 const siteFooterElement = document.querySelector('.footer');
 
 const filmsModel = new FilmsModel();
-const libriaryPresenter = new LibriaryPresenter();
+const libriaryPresenter = new LibriaryPresenter(siteMainElement, filmsModel);
 
 render(new FilterView(), siteMainElement);
 render(new UserLevelView(), siteHeaderElement);
@@ -24,4 +24,4 @@ render(new StatisticsView(), siteFooterElement);
 
 libriaryPresenter.init(siteMainElement, filmsModel);
 
-// current task: module3-task1
+// current task: module3-task2
