@@ -62,7 +62,7 @@ export default class LibriaryPresenter {
       document.body.removeChild(currentElement);
       document.body.classList.remove('hide-overflow');
 
-      document.removeEventListener('keydown', onEscKeyDown);
+      // document.removeEventListener('keydown', onEscKeyDown);
 
       this.#filmPopup = false;
     };
@@ -71,6 +71,7 @@ export default class LibriaryPresenter {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         hideCardPopup();
+        document.removeEventListener('keydown', onEscKeyDown);
       }
     };
 
@@ -79,20 +80,23 @@ export default class LibriaryPresenter {
       document.body.appendChild(cardPopupComponent.element);
       document.body.classList.add('hide-overflow');
 
-      document.addEventListener('keydown', onEscKeyDown);
+      // document.addEventListener('keydown', onEscKeyDown);
 
       this.#filmPopup = true;
 
       cardPopupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
         hideCardPopup();
+        document.removeEventListener('keydown', onEscKeyDown);
       });
     };
 
     cardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
       if (this.#filmPopup) {
         hideCardPopup();
+        document.removeEventListener('keydown', onEscKeyDown);
       }
       showCardPopup();
+      document.addEventListener('keydown', onEscKeyDown);
     });
 
     render(cardComponent, this.#filmsListContainer.element);
