@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {humanizeFilmReleaseDateToYear, humanizeFilmRuntime} from '../utils.js';
 import {DESCRIPTION_MAX_LENGTH} from '../const.js';
 
@@ -7,6 +7,34 @@ const createCommentsCountTemplate = (commentsId) => `${commentsId.length} commen
 const trimDescription = (description) => `${description.slice(0, DESCRIPTION_MAX_LENGTH + 3)}...`; // почему + 3 а не просто DESCRIPTION_MAX_LENGTH?
 
 const setCtrlItemStatus = (status) => `${ status ? 'film-card__controls-item--active' : '' }`;
+
+const BLANK_FILM = {
+  id: 0,
+  commentsId: [0],
+  filmInfo: {
+    title: 'Placeholder Film',
+    alternativeTitle: 'Alternative Placeholder Film',
+    totalRating: '0.0',
+    poster: 'images/posters/placeholder-film.jpg',
+    ageRating: '0',
+    director: 'PH Name',
+    writers: ['PH Name 1', 'PH Name 2', 'PH Name 3'],
+    actors: ['PH Name 1', 'PH Name 2', 'PH Name 3'],
+    release: {
+      date: '2019-05-11T00:00:00.000Z',
+      releaseCountry: 'PH Country',
+    },
+    runtime: 0,
+    genres: ['PH Genre 1', 'PH Genre 2', 'PH Genre 3'],
+    description: 'PH description',
+  },
+  userDetails: {
+    watchlist: false,
+    alreadyWatched: false,
+    watchingDate: '2019-04-12T16:12:32.554Z',
+    favorite: false,
+  },
+};
 
 const createCardTemplate = (film) => {
   const {commentsId, filmInfo, userDetails} = film; // деструктуризация
@@ -52,26 +80,25 @@ const createCardTemplate = (film) => {
         </article>`;
 };
 
-export default class CardView {
-  #element = null;
+export default class CardView extends AbstractView {
+  #film = null;
 
-  constructor(film) {
-    this.film = film;
+  constructor(film = BLANK_FILM) {
+    super();
+    this.#film = film;
   }
 
   get template() {
-    return createCardTemplate(this.film);
+    return createCardTemplate(this.#film);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  setClickHandler = (callback) => {
+    this._callback.click = callback;
+    this.element.addEventListener('click', this.#clickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.click();
+  };
 }

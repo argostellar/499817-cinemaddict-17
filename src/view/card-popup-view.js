@@ -1,5 +1,15 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {humanizeFilmReleaseDate, humanizeFilmRuntime, humanizeCommentDate} from '../utils.js';
+
+const PLACEHOLDER_COMMENTS = [
+  {
+    id: 100,
+    author: 'Empty author',
+    comment: 'Empty text',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile',
+  }
+];
 
 const createFilmGenresTemplate = (genres) => {
   let result = '';
@@ -180,35 +190,27 @@ const createCardPopupTemplate = (film = {}, comments) => {
 </section>`;
 };
 
-export default class CardPopupView {
-  #element = null;
+export default class CardPopupView extends AbstractView {
+  #film = null;
+  #comments = null;
 
-  constructor(film, comments) {
-    this.film = film;
-    this.comments = comments || [
-      {
-        id: 100,
-        author: 'Empty author',
-        comment: 'Empty text',
-        date: '2019-05-11T16:12:32.554Z',
-        emotion: 'smile',
-      }
-    ];
+  constructor(film, comments = PLACEHOLDER_COMMENTS) {
+    super();
+    this.#film = film;
+    this.#comments = comments;
   }
 
   get template() {
-    return createCardPopupTemplate(this.film, this.comments);
+    return createCardPopupTemplate(this.#film, this.#comments);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  setClickHandler = (callback) => {
+    this._callback.click = callback;
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#clickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.click();
+  };
 }

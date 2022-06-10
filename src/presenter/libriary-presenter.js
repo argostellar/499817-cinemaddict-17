@@ -6,7 +6,7 @@ import ShowMoreBtnView from '../view/show-more-btn-view.js';
 import CardView from '../view/card-view.js';
 import CardPopupView from '../view/card-popup-view.js';
 import NoCardView from '../view/no-card-view.js';
-import {render, RenderPosition} from '../render.js';
+import {render, RenderPosition} from '../framework/render.js';
 
 const CARDS_COUNT_PER_STEP = 5;
 
@@ -39,8 +39,7 @@ export default class LibriaryPresenter {
     this.#renderLibriary();
   };
 
-  #handleShowMoreBtnClick = (evt) => {
-    evt.preventDefault();
+  #handleShowMoreBtnClick = () => {
     this.#libriaryFilms
       .slice(this.#renderedCardsCount, this.#renderedCardsCount + CARDS_COUNT_PER_STEP)
       .forEach((film) => this.#renderCard(film, this.#comments));
@@ -84,13 +83,13 @@ export default class LibriaryPresenter {
 
       this.#filmPopup = true;
 
-      cardPopupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      cardPopupComponent.setClickHandler(() => {
         hideCardPopup();
         document.removeEventListener('keydown', onEscKeyDown);
       });
     };
 
-    cardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
+    cardComponent.setClickHandler(() => {
       if (this.#filmPopup) {
         hideCardPopup();
         document.removeEventListener('keydown', onEscKeyDown);
@@ -115,7 +114,7 @@ export default class LibriaryPresenter {
       if (this.#libriaryFilms.length > CARDS_COUNT_PER_STEP) {
         render(this.#showMoreBtnComponent, this.#filmsListComponent.element);
 
-        this.#showMoreBtnComponent.element.addEventListener('click', this.#handleShowMoreBtnClick);
+        this.#showMoreBtnComponent.setClickHandler(this.#handleShowMoreBtnClick);
       }
 
       for (let i = 0; i < Math.min(this.#libriaryFilms.length, CARDS_COUNT_PER_STEP); i++) {
