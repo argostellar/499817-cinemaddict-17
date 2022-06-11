@@ -18,4 +18,4 @@ render(new StatisticsView(), siteFooterElement);
 
 libriaryPresenter.init(siteMainElement, filmsModel);
 
-// current task: module4-task1
+// current task: module4-task2
