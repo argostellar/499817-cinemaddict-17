@@ -6,7 +6,7 @@ import ShowMoreBtnView from '../view/show-more-btn-view.js';
 import CardView from '../view/card-view.js';
 import CardPopupView from '../view/card-popup-view.js';
 import NoCardView from '../view/no-card-view.js';
-import {render, replace, remove, RenderPosition} from '../framework/render.js';
+import {render, remove, RenderPosition} from '../framework/render.js';
 
 const CARDS_COUNT_PER_STEP = 5;
 

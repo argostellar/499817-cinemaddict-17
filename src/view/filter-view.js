@@ -5,10 +5,10 @@ const createFilterItemTemplate = (filter) => {
 
   return (
     `<a href="#${name}" class="main-navigation__item">
-    ${name.replace(/^\w/, c => c.toUpperCase())}
+    ${name.replace(/^\w/, (char) => char.toUpperCase())}
     <span class="main-navigation__item-count">${count}</span>
     </a>`
-    );
+  );
 };
 
 const createFilterTemplate = (filterItems) => {
