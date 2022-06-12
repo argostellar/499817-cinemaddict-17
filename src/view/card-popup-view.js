@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {humanizeFilmReleaseDate, humanizeFilmRuntime, humanizeCommentDate} from '../utils.js';
+import {humanizeFilmReleaseDate, humanizeFilmRuntime, humanizeCommentDate} from '../utils/film.js';
 
 const PLACEHOLDER_COMMENTS = [
   {

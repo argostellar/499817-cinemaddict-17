@@ -241,6 +241,20 @@ const LOWER_RUNTIME_BORDER = 45;
 const UPPER_RUNTIME_BORDER = 250;
 const DESCRIPTION_MAX_LENGTH = 140;
 
+const FilterType = {
+  ALL: 'all',
+  WATCHLIST: 'watchlist',
+  HISTORY: 'history',
+  FAVORITES: 'favorites',
+};
+
+const UserLevel = {
+  NONE: 'none',
+  NOVICE: 'Novice',
+  FAN: 'Fan',
+  ['MOVIE BUFF']: 'Movie Buff',
+};
+
 export {
   ACTORS,
   WRITERS,
@@ -259,4 +273,6 @@ export {
   UPPER_RUNTIME_BORDER,
   DESCRIPTION_MAX_LENGTH,
   HOUR,
+  FilterType,
+  UserLevel,
 };
