@@ -6,7 +6,7 @@ import ShowMoreBtnView from '../view/show-more-btn-view.js';
 import CardView from '../view/card-view.js';
 import CardPopupView from '../view/card-popup-view.js';
 import NoCardView from '../view/no-card-view.js';
-import {render, RenderPosition} from '../framework/render.js';
+import {render, remove, RenderPosition} from '../framework/render.js';
 
 const CARDS_COUNT_PER_STEP = 5;
 
@@ -47,8 +47,9 @@ export default class LibriaryPresenter {
     this.#renderedCardsCount += CARDS_COUNT_PER_STEP;
 
     if (this.#renderedCardsCount >= this.#libriaryFilms.length) {
-      this.#showMoreBtnComponent.element.remove();
-      this.#showMoreBtnComponent.removeElement();
+      // this.#showMoreBtnComponent.element.remove();
+      // this.#showMoreBtnComponent.removeElement();
+      remove(this.#showMoreBtnComponent);
     }
   };
 

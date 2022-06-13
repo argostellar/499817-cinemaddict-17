@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {humanizeFilmReleaseDateToYear, humanizeFilmRuntime} from '../utils.js';
+import {humanizeFilmReleaseDateToYear, humanizeFilmRuntime} from '../utils/film.js';
 import {DESCRIPTION_MAX_LENGTH} from '../const.js';
 
 const createCommentsCountTemplate = (commentsId) => `${commentsId.length} comment${commentsId.length !== 1 ? 's' : ''}`;

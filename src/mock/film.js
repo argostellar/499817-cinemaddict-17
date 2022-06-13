@@ -12,7 +12,7 @@ import {
   UPPER_RUNTIME_BORDER,
   LOWER_RUNTIME_BORDER,
 } from '../const.js';
-import {getRandomInteger, getRandomItem, getRandomItems} from '../utils.js';
+import {getRandomInteger, getRandomItem, getRandomItems} from '../utils/common.js';
 
 const generateRating = () => {
   const integerPart = getRandomInteger(0, UPPER_RATING_BORDER);
